@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import NoteForm from './components/NoteForm';
+import NoteList from './components/NoteList';
+import noteService from './services/noteService';
+import './App.css'; 
 
-function App() {
+const App = () => {
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    // Obtener todas las notas al cargar la app
+    noteService.getNotes().then(setNotes);
+  }, []);
+
+  const addNote = (newNote) => {
+    setNotes([...notes, newNote]);
+  };
+
+  const deleteNote = (id) => {
+    noteService.deleteNote(id);
+    setNotes(notes.filter(note => note._id !== id));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Aplicación de Notas Basicas(MERN)</h1>
+      <NoteForm addNote={addNote} />
+      <NoteList notes={notes} deleteNote={deleteNote} />
     </div>
   );
-}
+};
 
 export default App;
