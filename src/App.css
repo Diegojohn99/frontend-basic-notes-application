@@ -91,6 +91,15 @@ h3 {
   color: #61dafb; 
 }
 
+.note-button {
+  margin-right: 10px;
+}
+
+.note-button:last-child {
+  margin-right: 0;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
